@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!-- 使用扫描机制，扫描控制器包 -->
+    <context:component-scan base-package="controller" />
+    
+    <!-- 简化开发配置，使用resources过滤资源时必须使用该配置 -->
+    <mvc:annotation-driven />
+    
+    <!-- 静态资源需要单独处理，不需要dispatcher servlet进行拦截处理 -->  
+    <mvc:default-servlet-handler/>
+    <mvc:resources location="/CSS/" mapping="/CSS/**"></mvc:resources> 
+    <mvc:resources location="/js/" mapping="/js/**"></mvc:resources>
+    <mvc:resources location="/images/" mapping="/images/**"></mvc:resources>
+    
+    <!-- 配置视图解析器 -->
+    <bean
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+        id="internalResourceViewResolver">
+        <!-- 前缀 -->
+        <property name="prefix" value="/WEB-INF/jsp_result/before/" />
+        <!-- 后缀 -->
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+</beans>

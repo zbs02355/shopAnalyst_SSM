@@ -1,0 +1,14 @@
+@charset "UTF-8";
+#title {
+	text-align: center;
+	margin: 20% 28%;
+}
+p {
+	font-size: 30px;
+	font-weight: bold;
+}
+#sureButton{
+	width: 80px;
+	height: 30px;
+	
+}

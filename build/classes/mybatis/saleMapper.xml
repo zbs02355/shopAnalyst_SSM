@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 将Mapper与dao绑定 -->
+<mapper namespace="dao.saleDao">
+	<!-- 查询销售总数 -->
+	<select id="selectShopSum" resultType="pojo.sale" parameterType="map">
+		SELECT COUNT(*) AS num, yearmonth, ${cityOrTown}, loc
+			FROM sale 
+			WHERE yearmonth = #{month}
+			GROUP BY yearmonth, ${cityOrTown}
+	</select>
+	
+	<!-- 查询商品销量 -->
+	<select id="selectMaxCategory" resultType="pojo.sale" parameterType="map">
+		SELECT maxnum, yearmonth, ${cityOrTown}, category_name, loc FROM
+		(
+			SELECT COUNT(*) AS maxnum, yearmonth, ${cityOrTown}, category_name, loc
+			FROM sale 
+			WHERE yearmonth = #{month}
+			GROUP BY ${cityOrTown}, category_name
+            ORDER BY maxnum DESC
+		) AS t
+		GROUP BY ${cityOrTown}
+	</select>
+	
+	<!-- 查询月份 -->
+	<select id="selectMonth" resultType="pojo.yearmonthInSale">
+		SELECT yearmonth FROM sale GROUP BY yearmonth
+	</select>
+</mapper>
